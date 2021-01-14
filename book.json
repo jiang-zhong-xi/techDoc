@@ -1,0 +1,7 @@
+{
+	"title": "123",
+	"description": "This is such a great book!",
+	"plugins": [
+         "expandable-chapters"
+    ]
+}
