@@ -4,9 +4,13 @@
   "description": "* [react router](react router/readme.md)",
   "main": "index.js",
   "dependencies": {
-    "gitbook-plugin-expandable-chapters": "^0.2.0"
+    "gitbook-plugin-expandable-chapters": "^0.2.0",
+    "gitbook-plugin-favicon": "0.0.2",
+    "gitbook-plugin-github": "^3.0.0",
+    "gitbook-plugin-hide-element": "0.0.4",
+    "gitbook-plugin-page-treeview": "^3.0.3",
+    "gitbook-plugin-search-pro": "^2.0.2"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
