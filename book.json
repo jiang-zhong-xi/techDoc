@@ -2,7 +2,7 @@
 	"title": "个人技术文档",
 	"description": "This is such a great book!",
 	"plugins": [
-         "expandable-chapters", "page-treeview", "favicon", "hide-element", "-sharing", "-lunr", "-search", "search-pro"
+         "expandable-chapters", "page-treeview", "favicon", "hide-element", "-sharing", "-lunr", "-search", "search-pro", "back-to-top-button"
     ],
 	"pluginsConfig": {
         "page-treeview": {
