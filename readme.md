@@ -12,4 +12,4 @@ gitbook build
 
 ### github io发布
 
-在master修改代码后提交到远程，运行"gitbook build"，切换到main分支，把master分支的_book复制过来，然后提交到远程，bingo！
+在master修改代码后提交到远程，运行"gitbook build"，切换到main分支，把master分支的_book的内容复制过来，然后提交到远程，bingo！
