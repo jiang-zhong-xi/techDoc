@@ -4,19 +4,60 @@ react 版本是v16.6，react v16提出了fiber，但是react fiber最重要的�
 
 ### 正文
 
+#### fiber
+
+fiber做了什么？fiber提升了react的性能。
+
+fiber是什么？fiber让主线程和react更高效，主线程是单线程而且需要完成脚本执行、布局、绘制等过程，而react面临一些频繁更新、计算密集的场景，通过fiber的批量化和碎片化让react和主线程更好的配合。
+
+fiber的主要数据结构？return指向父fiber、child指向子fiber、sibling指向兄弟fiber、stateNode指向实例或者DOM的引用
+
 从ReactDOM.render出发，到最后界面渲染完成，render内部主要经历了render阶段、commit阶段。
 
 #### render阶段
 
-render
+从HostRoot节点开始，这个节点对应着根DOM，然后开始workLoop，每次workLoop都有一个work-in-progress树的节点，该节点可能是新建的也可能是从current树复用的，这涉及到了diff算法，对于需要的改变，都存储再effect链表和work-in-progress里，最终都会合并给父节点，每完成一个workLoop对于异步的work都会判断下主线程是否有需要做的其它任务，如果有，则暂停当前任务，通过requestIdleCallback等主线程有闲置时间了再继续执行。
 
 #### commit阶段
 
+render阶段把需要改变的节点都存储在了sideEffect链表，最终这些链表都汇总到了HostRoot的effect属性，然后遍历effect属性对DOM做出操作，整个commit阶段不能被打断。
+
 ##### diff
+
+workLoop过程中，每次重新生成虚拟DOM时会和current树的对应节点做比较，如果新的当前节点是单元素，则从current树对应的节点中和当前节点比较，如果key和type（元素类型）都相同说明可以复用，则把current树中的节点克隆给当前work-in-progress树，然后在下次workLoop中更新props和state即可，如果key或者type不同则根据当前元素新建fiber；如果当前节点是列表则是以下逻辑：
+
+1. 首先匹配相同索引号的元素和旧的fiber，如果key不同则直接退出匹配循环，如果key相同，比较type是否相同，相同则复用，不同则新建。
+
+2. 如果新的元素遍历完毕了则直接退出reconcileChildrenArray。
+
+3. 如果oldFiber遍历完了，则把剩下的新元素对应的fiber都新建。
+
+4. 如果oldFiber还有，新元素也没遍历完，则通过map形式进行新元素和旧fiber是否可重用的匹配。
+
+  这里有个关键点是lastPlacedIndex，这个值始终保持新元素的fiber如果是复用的旧fiber的最大的index，这样就能实现复     用的节点保持不动，提高性能。
+
+ 再就是如果新元素和旧fiber是完全对应的（key，index，element）则在第一轮后直接旧匹配完了。
+
+  就算最后新元素和旧节点都有，那么也通过map实现高效的匹配。
 
 #### setState
 
+三种调用setState的场景，生命周期中、事件系统、延迟函数中。
+
+生命周期中如componentWillMount，setState调用后，更新链表会添加一个更新，而更新链表会在生命周期函数执行完毕后执行更新，所以在本次任务的这个步骤后就能把state更新。
+
+事件系统内中如onClick事件，setState调用后，由于是批量更新，所以等到当前事件的函数体执行完毕，然后在下一次的任务会对当前节点对应的fiber以及子fiber检查是否有更新。
+
+延迟函数中如setTimeout，此时react没有执行中的任务，所以setState调用后，立马就可以得到更新后的state。
+
 #### 事件
+
+1. 首先是调用组件的render函数，把事件添加到虚拟DOM的属性中。
+2. 根据sideEffect创建真实DOM时需要对DOM的属性初始化，此时会把DOM对应的事件以及处理炳添加进去，这里不是添加组件的事件处理柄，而是添加一个顶层组件（body）对该事件的监听器，这是一种委托模式，减少内存损耗。
+3. 在DOM上触发事件时，监听器得到触发，获取当前事件的事件源、参数、类型。
+4. 从事件源、参数、类型中获取事件源DOM对应的fiber、合并react事件参数。
+5. 通过fiber的return属性，找到父代fiber中包含该事件处理柄的fiber，把这个fiber和对应的处理柄存储起来，做捕获或者冒泡用。
+6. 通过自定义事件来触发事件处理柄，自定义事件的好处是可以捕获错误，不影响后面的执行。
 
 ### 小技巧
 
