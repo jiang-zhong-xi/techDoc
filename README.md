@@ -7,7 +7,7 @@
 * Jest
 * Typescript
 * Mobx
-* Redux
+* [Redux](框架/redux/readme.md)
 * javascript
 * css
 * html

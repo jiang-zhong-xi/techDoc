@@ -144,3 +144,10 @@ setState调用后，首先取出实例对应的fiber，然后再fiber上的更�
 从一个页面（权益包订单列表）的重构分析hooks，hooks重构后确实代码量少了，因为state和setState的使用确实简洁了，但是useState被调用了很多次，这个看着有点难受；useEffect异步执行的，所以比生命周期函数性能更好，对于某些需要先订阅后删除的场景支持性更好；关于自定义hooks实现代码复用确实比高阶组件好多了，没那么多嵌套，而是做了层提取就能实现；
 
 useCallback 和 useMemo像是vue中的computed的实现，只有依赖项更新时才重新计算；useRef是react class组件中ref的实现。
+
+#### react性能优化
+
+1. 开发环境使用开发版本的react，生产环境使用生产环境的react，因为react生成环境会删去很多警告类的代码。
+2. react内部本身已经做了很多优化，比如对DOM的重用，因为操作DOM很昂贵，react会对新生成的元素和已有的fiber做比较，如果key和type相同直接“克隆”，不过我们还可以通过componentShouldUpdate或者pureComponent进一步优化性能。
+3. 因为pureComponent属于浅比较，如果我们确实需要更新state，可以使用concat、spread语法、Object.Assign，改变对象的引用。
+4. 对于长列表，可以使用“列表虚拟化”技术，如react-windowing，对列表项懒加载。

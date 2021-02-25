@@ -7,7 +7,7 @@
 * Jest
 * Typescript
 * Mobx
-* Redux
+* [Redux](框架/redux/readme.md)
 * javascript
 * css
 * html
@@ -15,4 +15,3 @@
 * 设计模式
 * 浏览器
 * 正则表达式
-
