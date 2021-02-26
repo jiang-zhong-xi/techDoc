@@ -14,3 +14,12 @@ function is(x: any, y: any) {
 }
 ```
 
+### bind
+
+### call
+
+### apply
+
+### promise
+
+### await、async
