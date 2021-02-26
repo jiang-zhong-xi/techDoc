@@ -1,0 +1,541 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>宏任务和微任务 · 个人技术文档</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-page-treeview/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../asset/css/website.css">
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="回流和重绘.html" />
+    
+    
+    <link rel="prev" href="requestAnimationFrame和requestIdleCallback.html" />
+    
+
+    
+        <link rel="shortcut icon" href='../../asset/img/favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../../asset/img/favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="apple-touch-icon" href='../../asset/img/favicon.ico'>
+    
+    
+        
+        <link rel="apple-touch-icon" sizes="120x120" href="../../asset/img/favicon.ico">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="../../asset/img/favicon.ico">
+        
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../../框架/react-router/readme.html">
+            
+                <a href="../../框架/react-router/readme.html">
+            
+                    
+                    React Router
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../../框架/react/readme.html">
+            
+                <a href="../../框架/react/readme.html">
+            
+                    
+                    React
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    Mpvue
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../../框架/webpack/readme.md">
+            
+                <span>
+            
+                    
+                    Webpack
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../../框架/jest.readme.md">
+            
+                <span>
+            
+                    
+                    Jest
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../../框架/typescript/readme.html">
+            
+                <a href="../../框架/typescript/readme.html">
+            
+                    
+                    Typescript
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Mobx
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../../框架/redux/readme.html">
+            
+                <a href="../../框架/redux/readme.html">
+            
+                    
+                    Redux
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    javascript
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="requestAnimationFrame和requestIdleCallback.html">
+            
+                <a href="requestAnimationFrame和requestIdleCallback.html">
+            
+                    
+                    requestAnimationFrame和requestIdleCallback
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.10.2" data-path="宏任务和微任务.html">
+            
+                <a href="宏任务和微任务.html">
+            
+                    
+                    宏任务和微任务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="回流和重绘.html">
+            
+                <a href="回流和重绘.html">
+            
+                    
+                    回流和重绘
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    css
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    html
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    性能
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    设计模式
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    浏览器
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../../其它/浏览器/存储.html">
+            
+                <a href="../../其它/浏览器/存储.html">
+            
+                    
+                    前端存储
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="../../其它/浏览器/缓存.html">
+            
+                <a href="../../其它/浏览器/缓存.html">
+            
+                    
+                    浏览器缓存
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" >
+            
+                <span>
+            
+                    
+                    正则表达式
+            
+                </span>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >宏任务和微任务</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <ul>
+<li><div><a href="#&#x5FAE;&#x4EFB;&#x52A1;">&#x5FAE;&#x4EFB;&#x52A1;</a><i></i></div></li>
+<li><div><a href="#&#x5B8F;&#x4EFB;&#x52A1;vs&#x5FAE;&#x4EFB;&#x52A1;">&#x5B8F;&#x4EFB;&#x52A1;Vs&#x5FAE;&#x4EFB;&#x52A1;</a><i></i></div></li>
+</ul>
+
+
+<h3 id="&#x5B8F;&#x4EFB;&#x52A1;">&#x5B8F;&#x4EFB;&#x52A1;</h3>
+<p>setTimeout&#x3001;setInterval&#xFF0C;&#x4EFB;&#x52A1;&#x88AB;&#x5B89;&#x6392;&#x540E;&#x5EF6;&#x8FDF;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x56DE;&#x8C03;&#x88AB;&#x52A0;&#x5165;&#x4EFB;&#x52A1;&#x961F;&#x5217;&#xFF0C;&#x800C;&#x4E00;&#x65E6;&#x6267;&#x884C;&#x6808;&#x7A7A;&#x4E86;&#x5C31;&#x4F1A;&#x6267;&#x884C;&#x4EFB;&#x52A1;&#x961F;&#x5217;&#x4E2D;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF0C;&#x800C;&#x4E14;&#x5728;layout&#x3001;paint&#x4E4B;&#x540E;&#x3002;</p>
+<h3 id="&#x5FAE;&#x4EFB;&#x52A1;">&#x5FAE;&#x4EFB;&#x52A1;</h3>
+<p>promise&#xFF0C;&#x4EFB;&#x52A1;&#x88AB;&#x5B89;&#x6392;&#x540E;&#x53EA;&#x8981;&#x540C;&#x6B65;&#x4EE3;&#x7801;&#x6267;&#x884C;&#x5B8C;&#x4E86;&#xFF0C;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7ACB;&#x5373;&#x6267;&#x884C;&#x3002;</p>
+<h3 id="&#x5B8F;&#x4EFB;&#x52A1;vs&#x5FAE;&#x4EFB;&#x52A1;">&#x5B8F;&#x4EFB;&#x52A1;Vs&#x5FAE;&#x4EFB;&#x52A1;</h3>
+<p>&#x6267;&#x884C;&#x987A;&#x5E8F;&#xFF0C;&#x5728;&#x67D0;&#x4E9B;&#x6D4F;&#x89C8;&#x5668;&#x7248;&#x672C;&#x4E0A;microTask&#x88AB;&#x4EFB;&#x52A1;&#x662F;Task&#x7684;&#x4E00;&#x79CD;&#xFF0C;&#x8FD9;&#x662F;&#x7531;&#x4E8E;ECMA&#x5BF9;&#x4E8E;&#x8FD9;&#x90E8;&#x5206;&#x7684;&#x5B9A;&#x4E49;&#x6A21;&#x7CCA;&#x5BFC;&#x81F4;&#x7684;&#xFF0C;ECMA&#x4E2D;&#x6CA1;&#x6709;promise&#x6216;&#x8005;microTask&#x7684;&#x8BCD;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x6837;&#x4F1A;&#x5BFC;&#x81F4;&#x4E00;&#x4E9B;&#x6027;&#x80FD;&#x95EE;&#x9898;&#xFF0C;&#x56E0;&#x4E3A;&#x5FAE;&#x4EFB;&#x52A1;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x672C;&#x6765;&#x662F;&#x540C;&#x6B65;&#x4EE3;&#x7801;&#x6267;&#x884C;&#x5B8C;&#x6BD5;&#x540E;&#x7ACB;&#x5373;&#x6267;&#x884C;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x6837;&#x8981;&#x7B49;&#x5230;layout&#x3001;paint&#x4E4B;&#x540E;&#x3002;&#x6240;&#x4EE5;&#x4E00;&#x822C;&#x6D4F;&#x89C8;&#x5668;&#x6BD4;&#x5982;chrome&#x4E0D;&#x8BA4;&#x4E3A;&#x5FAE;&#x4EFB;&#x52A1;&#x662F;&#x5B8F;&#x4EFB;&#x52A1;&#x7684;&#x4E00;&#x79CD;&#x3002;</p>
+<p>&#x6267;&#x884C;&#x540C;&#x6B65;&#x811A;&#x672C;-&gt;&#x6267;&#x884C;&#x6240;&#x6709;&#x5FAE;&#x4EFB;&#x52A1;-&gt;style caclation -&gt; layout-&gt; paint -&gt; &#x6267;&#x884C;&#x4E00;&#x4E2A;&#x5B8F;&#x4EFB;&#x52A1;&#x3002;</p>
+<p>&#x53C2;&#x8003;&#xFF1A;<a href="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/?utm_source=html5weekly" target="_blank">https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/?utm_source=html5weekly</a> &#x5173;&#x4E8E;&#x6D4F;&#x89C8;&#x5668;&#x7248;&#x672C;&#x7684;&#x5DEE;&#x5F02;&#x6027;&#x672A;&#x6DF1;&#x8BFB;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="requestAnimationFrame和requestIdleCallback.html" class="navigation navigation-prev " aria-label="Previous page: requestAnimationFrame和requestIdleCallback">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="回流和重绘.html" class="navigation navigation-next " aria-label="Next page: 回流和重绘">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"宏任务和微任务","level":"1.10.2","depth":2,"next":{"title":"回流和重绘","level":"1.10.3","depth":2,"path":"基础/js/回流和重绘.md","ref":"基础/js/回流和重绘.md","articles":[]},"previous":{"title":"requestAnimationFrame和requestIdleCallback","level":"1.10.1","depth":2,"path":"基础/js/requestAnimationFrame和requestIdleCallback.md","ref":"基础/js/requestAnimationFrame和requestIdleCallback.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","page-treeview","favicon","hide-element","-sharing","-lunr","-search","search-pro","back-to-top-button","livereload"],"styles":{"website":"asset/css/website.css"},"pluginsConfig":{"page-treeview":{"copyright":"Copyright &#169; aleen42","minHeaderCount":"2","minHeaderDeep":"2","collapsed":false},"livereload":{},"search-pro":{},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"favicon":{"shortcut":"asset/img/favicon.ico","bookmark":"asset/img/favicon.ico","appleTouch":"asset/img/favicon.ico","appleTouchMore":{"120x120":"asset/img/favicon.ico","180x180":"asset/img/favicon.ico"}},"back-to-top-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"个人技术文档","gitbook":"*","description":"This is such a great book!"},"file":{"path":"基础/js/宏任务和微任务.md","mtime":"2021-02-18T07:53:31.846Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-26T07:38:40.187Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -239,6 +239,177 @@ processModuleDependencies(module, callback) {
 
 遍历入口文件的依赖。addModuleDependencies方法代码和_addModuleChain基本类似，最终遍历所有依赖模块，存入__modules中。
 
+## Hooks
+
+### Hooks的重要性
+
+众所周知wepack是由一系列的插件来组成的，包括webpack内部插件和外部插件，而插件的注册和执行的核心就是依赖"tapable"即Hooks，所有知道了Hooks的执行原理无论是写插件、还是读插件都有由事半功倍的效果。
+
+### Hooks的分类
+
+1. 按执行的逻辑分类
+
+   basic，基本的Hooks，如果Hooks的名字里没有bail、waterfall、loop，哪这个Hooks就是基本的Hooks，Hooks的回调函数是一个接着一个执行。
+
+   waterfall，同上，瀑布流式的一个执行完了再紧接着执行下一个，函数间可以传递参数。
+
+   bail，可提前退出的Hooks，如果某个Hooks中的回调函数返回了非undefined的值，那么就可以提前推出了。
+
+   loop，可循环执行的的Hooks，如果某个Hooks的回调函数返回了非undefined的值，那么从第一个回调重新执行，直到所有回调都返回undefined。
+
+2. 按注册的类型分类
+
+   sync，这类Hooks只能通过tap注册插件，执行时可以用call、callAsync、promise，但是执行时都是一个接着一个执行，但是执行callAsync时必须传递个回调函数作为第二个参数
+
+   ```
+   Hook.callAsync({}, () => {})
+   ```
+
+   asyncSeries，可以通过同步的(tap)、基于回调的(tapAsync)、promise(tapPromise)的函数注册，但是执行时只能用callAsync或者promise，对于通过tapAsync注册进回调，会传递一个执行下一个异步函数的回调，对于通过tap注册的回调则没有这个参数回调。
+
+   ```javascript
+   const Hook = new AsyncSeriesHook(["compiler"])
+     Hook.tapAsync('foo', (a, next) => {
+       console.log('1', next)
+       return 'a'
+     })
+     Hook.tap('foo1', (b) => {
+       console.log('2', b)
+       return 'b'
+     })
+     Hook.tapAsync('foo2', (c) => {
+       console.log('3', c)
+       return 'c'
+     })
+     Hook.callAsync()
+   // 最后生成的执行函数
+   (function anonymous(compiler, _callback
+   ) {
+     "use strict";
+     var _context;
+     var _x = this._x;
+     function _next0() {
+       var _fn1 = _x[1];
+       var _hasError1 = false;
+       try {
+         _fn1(compiler); // 普通执行
+       } catch (_err) {
+         _hasError1 = true;
+         _callback(_err);
+       }
+       if (!_hasError1) {
+         var _fn2 = _x[2];
+         _fn2(compiler, _err2 => {
+           if (_err2) {
+             _callback(_err2);
+           } else {
+             _callback();
+           }
+         });
+       }
+     }
+     var _fn0 = _x[0];
+     _fn0(compiler, _err0 => { // 带回调执行
+       if (_err0) {
+         _callback(_err0);
+       } else {
+         _next0();
+       }
+     });
+   
+   })
+   ```
+
+   asyncParallel，可以通过同步的(tap)、基于回调的(tapAsync)、promise(tapPromise)的函数注册，但是调用异步函数是同时调用，理解了同步和异步的区别，那么异步的“series”和“parallel”就好区分了，“series”需要在第一个回调里执行第二个参数函数来调起下一个异步函数的函数，而“parallel”所有的异步函数同时执行，而这里回调函数第二个参数函数的作用仅是为了统计调用完所有异步函数后调用最后的回调，有点绕，必须上代码。
+
+   ```javascript
+   const Hook = new AsyncParallelHook(["compiler"])
+     Hook.tapAsync('foo', (a, next) => {
+       console.log('1', next)
+       return 'a'
+     })
+     Hook.tap('foo1', (b) => {
+       console.log('2', b)
+       return 'b'
+     })
+     Hook.tapAsync('foo2', (c) => {
+       console.log('3', c)
+       return 'c'
+     })
+     Hook.callAsync()
+   // 生成执行代码如下
+   (function anonymous(compiler, _callback
+   ) {
+     "use strict";
+     var _context;
+     var _x = this._x;
+     do {
+       var _counter = 3;
+       var _done = () => {
+         _callback();
+       };
+       if (_counter <= 0) break;
+       var _fn0 = _x[0];
+       _fn0(compiler, _err0 => {
+         if (_err0) {
+           if (_counter > 0) {
+             _callback(_err0);
+             _counter = 0;
+           }
+         } else {
+           if (--_counter === 0) _done();
+         }
+       });
+       if (_counter <= 0) break;
+       var _fn1 = _x[1];
+       var _hasError1 = false;
+       try {
+         _fn1(compiler);
+       } catch (_err) {
+         _hasError1 = true;
+         if (_counter > 0) {
+           _callback(_err);
+           _counter = 0;
+         }
+       }
+       if (!_hasError1) {
+         if (--_counter === 0) _done();
+       }
+       if (_counter <= 0) break;
+       var _fn2 = _x[2];
+       _fn2(compiler, _err2 => {
+         if (_err2) {
+           if (_counter > 0) {
+             _callback(_err2);
+             _counter = 0;
+           }
+         } else {
+           if (--_counter === 0) _done();
+         }
+       });
+     } while (false);
+   
+   })
+   ```
+
+   
+
+### intercept
+
+intercept截断器,在tap的某些阶段执行前执行
+
+- register方法在添加截断器时可以获取每个taps并修改
+
+- call 当Hooks被触发时调用触发,可以获取Hooks参数
+
+- tap 当Hooks添加插件时触发此时不能修改taps
+
+- loop 当loop Hooks执行时调用
+
+### Context
+
+Hooks和intercept可以选择性的访问这个值，这个值会被传给后续插件和截断器。
+
 ## Loaders
 
 #### 关于什么是loaders
